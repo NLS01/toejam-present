@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<script>
+		function createCard(imageUrl, selectOptions, imageAltText = 'Card image', selectLabel = 'Choose an option') {
+  // Create the card container
+  const card = document.createElement('div');
+  card.style.border = '1px solid #ccc';
+  card.style.borderRadius = '8px';
+  card.style.padding = '16px';
+  card.style.width = '300px';
+  card.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+  card.style.display = 'flex'; // Use flexbox for horizontal layout
+  card.style.flexDirection = 'row'; // Align items horizontally
+  card.style.alignItems = 'center'; // Center elements vertically
+  card.style.gap = '16px'; // Add spacing between image and select
+
+  // Create the image element
+  const img = document.createElement('img');
+  img.src = imageUrl;
+  img.alt = imageAltText; // Accessibility: Add alt text
+  img.style.width = '100px'; // Set fixed width for the image
+  img.style.height = '100px'; // Set fixed height for the image
+  img.style.borderRadius = '8px'; // Optional: Add rounded corners
+  img.style.objectFit = 'cover'; // Ensure the image doesn’t stretch
+
+  // Create a container for the select and its label
+  const selectContainer = document.createElement('div');
+  selectContainer.style.flex = '1'; // Allow the container to grow and take available space
+
+  // Create a label for the select element (for accessibility)
+  const selectLabelElement = document.createElement('label');
+  selectLabelElement.textContent = selectLabel;
+  selectLabelElement.style.display = 'block';
+  selectLabelElement.style.fontWeight = 'bold';
+  selectLabelElement.style.marginBottom = '8px';
+
+  // Create the select element
+  const select = document.createElement('select');
+  select.setAttribute('aria-label', selectLabel); // Accessibility: Add ARIA label
+  select.style.padding = '8px';
+  select.style.borderRadius = '4px';
+  select.style.border = '1px solid #ccc';
+  select.style.width = '100%';
+
+  // Create empty option
+  const opt = document.createElement('option');
+  opt.value = "";
+  opt.textContent = selectLabel;
+  select.appendChild(opt);
+
+  // Add options to the select element
+  selectOptions.forEach(option => {
+    const opt = document.createElement('option');
+    opt.value = option.value;
+    opt.textContent = option.label;
+    select.appendChild(opt);
+  });
+
+  // Append the label and select to the select container
+  selectContainer.appendChild(selectLabelElement);
+  selectContainer.appendChild(select);
+
+  // Append the image and select container to the card
+  card.appendChild(img);
+  card.appendChild(selectContainer);
+
+  // Return the card element
+  return card;
+}
+		</script>
+
+		<script>
+let presentValues= ['Boombox', 'Decoy', 'Doorway', 'Extra Life', 'Extra Buck', 'Earthling', 'Food', 'Fudge Sundae', 'Icarus Wings', 'Innertube', 'Jackpot', 'Promotion', 'Rain Cloud', 'Randomizer', 'Rocket Skates', 'Rootbeer', 'Rose Bushes', 'School Book', 'Sling Shot', 'Spring Shoes', 'Super Hitops', 'Telephone', 'Togetherness', 'Tomato Rain', 'Tomatoes', 'Total Bummer!', 'Un-Fall'];
+
+let presentImages = [];
+let presentImageBase = "./tje1presents/presents-3x/the-presents-3x-@.png";
+for(var i = 1; i <= 27; i++) {
+	presentImages.push(presentImageBase.replace('@', i));
+}
+
+
+let containerDiv = document.createElement('div');
+containerDiv.style = "display: flex;flex-wrap: wrap;gap: 10px;";
+document.body.appendChild(containerDiv);
+
+for(const presentImage of presentImages) {
+	const selectOptions = presentValues.map(v => ({value: v, label: v}))
+
+	const card = createCard(presentImage, selectOptions, 'Present', 'Select the present');
+	containerDiv.appendChild(card);
+}
+		</script>
+	</body>
+</html>
